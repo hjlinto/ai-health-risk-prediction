@@ -43,3 +43,21 @@ linear_regression.fit(x_train, y_train)
 
 # Makes predictions based on test data
 y_pred = linear_regression.predict(x_test)
+
+# Evaluates model performance
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print("Linear Regression Model Results:")
+print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
+print(f"R^2: {r2:.2f}")
+
+
+# Visualizes predictions vs. actual values
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, y_pred, alpha=0.5, color='blue')
+plt.xlabel("Actual Health Risk Score")
+plt.ylabel("Predicted Health Risk Score")
+plt.title("Linear Regression: Prediction vs Actual")
+plt.grid()
+plt.show()
