@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from scipy.stats import zscore
 from sklearn.linear_model import Ridge, Lasso
+from sklearn.ensemble import BaggingRegressor, GradientBoostingRegressor
 
 # Loads dataset
 file_path = "./data/DQN1_Dataset.csv"
@@ -130,3 +131,27 @@ lasso_r2 = r2_score(y_test_opt, lasso_pred)
 print("\nLasso Model Results:")
 print(f"RMSE: {lasso_rmse:.2f}")
 print(f"R^2: {lasso_r2:.2f}")
+
+# Bagging Regressor
+bagging = BaggingRegressor(estimator=LinearRegression(), n_estimators=10, random_state=42)
+bagging.fit(X_train_opt, y_train_opt)
+bagging_pred = bagging.predict(X_test_opt)
+bagging_rmse = np.sqrt(mean_squared_error(y_test_opt, bagging_pred))
+bagging_r2 = r2_score(y_test_opt, bagging_pred)
+
+print("\nBagging Model Results:")
+print(f"RMSE: {bagging_rmse:.2f}")
+print(f"R^2: {bagging_r2:.2f}")
+
+# Gradient Boosting Regressor
+gbr = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+gbr.fit(X_train_opt, y_train_opt)
+gbr_pred = gbr.predict(X_test_opt)
+gbr_rmse = np.sqrt(mean_squared_error(y_test_opt, gbr_pred))
+gbr_r2 = r2_score(y_test_opt, gbr_pred)
+
+print("\nGradient Boosting Model Results:")
+print(f"RMSE: {gbr_rmse:.2f}")
+print(f"R^2: {gbr_r2:.2f}")
+
+
