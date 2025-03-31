@@ -6,6 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from scipy.stats import zscore
+from sklearn.linear_model import Ridge, Lasso
 
 # Loads dataset
 file_path = "./data/DQN1_Dataset.csv"
@@ -48,7 +49,7 @@ y_pred = linear_regression.predict(x_test)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
 
-print("Linear Regression Model Results:")
+print("\nLinear Regression Model Results:")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 print(f"R^2: {r2:.2f}")
 
@@ -66,7 +67,7 @@ plt.show()
 correlation_matrix = df[independent_variables + [dependent_variable]].corr()
 correlation_with_target = correlation_matrix[dependent_variable].drop(dependent_variable).sort_values(ascending=False)
 selected_features = correlation_with_target[abs(correlation_with_target) > 0.2].index.tolist()
-print("Selected features based on Correlation Matrix:")
+print("\nSelected features based on Correlation Matrix:")
 print(selected_features)
 
 # Optimization technique 2 - Outlier Removal
@@ -75,7 +76,7 @@ df_selected = df[selected_features + [dependent_variable]]
 z_scores = np.abs(zscore(df_selected))
 # Removes rows with any feature's Z-score > 3
 df_filtered = df_selected[(z_scores < 3).mean(axis=1) > 0.9]
-print(f"Original rows: {df_selected.shape[0]}, After outlier removal: {df_filtered.shape[0]}")
+print(f"\nOriginal rows: {df_selected.shape[0]}, After outlier removal: {df_filtered.shape[0]}")
 
 # Split dataset into training and testing sets
 X_opt = df_filtered[selected_features]
@@ -94,7 +95,7 @@ y_pred_opt = model_opt.predict(X_test_opt)
 rmse_opt = np.sqrt(mean_squared_error(y_test_opt, y_pred_opt))
 r2_opt = r2_score(y_test_opt, y_pred_opt)
 
-print("Linear Regression Model Results:")
+print("\nOptimized Linear Regression Model Results:")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 print(f"R^2: {r2:.2f}")
 
@@ -107,3 +108,25 @@ plt.ylabel("Predicted Health Risk Score")
 plt.title("Optimized Linear Regression: Prediction vs Actual")
 plt.grid()
 plt.show()
+
+# Ridge Regression
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train_opt, y_train_opt)
+ridge_pred = ridge.predict(X_test_opt)
+ridge_rmse = np.sqrt(mean_squared_error(y_test_opt, ridge_pred))
+ridge_r2 = r2_score(y_test_opt, ridge_pred)
+
+print("\nRidge Model Results:")
+print(f"RMSE: {ridge_rmse:.2f}")
+print(f"R^2: {ridge_r2:.2f}")
+
+# Lasso Regression
+lasso = Lasso(alpha=0.01)
+lasso.fit(X_train_opt, y_train_opt)
+lasso_pred = lasso.predict(X_test_opt)
+lasso_rmse = np.sqrt(mean_squared_error(y_test_opt, lasso_pred))
+lasso_r2 = r2_score(y_test_opt, lasso_pred)
+
+print("\nLasso Model Results:")
+print(f"RMSE: {lasso_rmse:.2f}")
+print(f"R^2: {lasso_r2:.2f}")
