@@ -154,4 +154,16 @@ print("\nGradient Boosting Model Results:")
 print(f"RMSE: {gbr_rmse:.2f}")
 print(f"R^2: {gbr_r2:.2f}")
 
+# Comparison summary of evaluation metrics
+print("\nLinear Regression Model Comparison Summary:")
+print("-" * 40)
+print(f"{'Model':30} | {'RMSE':>6} | {'R² Score':>8}")
+print("-" * 40)
 
+print(f"{'Original Linear':30} | {rmse:.2f}  | {r2:.2f}")
+print(f"{'Optimized Linear':30} | {rmse_opt:.2f}  | {r2_opt:.2f}")
+print(f"{'Ridge Regression':30} | {ridge_rmse:.2f}  | {ridge_r2:.2f}")
+print(f"{'Lasso Regression':30} | {lasso_rmse:.2f}  | {lasso_r2:.2f}")
+print(f"{'Bagging Regressor':30} | {bagging_rmse:.2f}  | {bagging_r2:.2f}")
+print(f"{'Gradient Boosting Regressor':30} | {gbr_rmse:.2f}  | {gbr_r2:.2f}")
+print("-" * 40)
