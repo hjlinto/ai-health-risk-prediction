@@ -70,6 +70,13 @@ git clone https://github.com/hjlinto/ai-health-risk-prediction.git
 python linear_regression_model.py
 ```
 
+---
+
+## Reflections
+- In a future iteration, I would explore incorporating geospatial features and more appropriate ensemble methods like XGBoost to account for regaional differences in health risk. 
+
+---
+
 ## Author
 Created by: Hunter J Linton
 
