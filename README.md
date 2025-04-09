@@ -70,3 +70,6 @@ git clone https://github.com/hjlinto/ai-health-risk-prediction.git
 python linear_regression_model.py
 ```
 
+## Author
+Created by: Hunter J Linton
+
